@@ -143,7 +143,7 @@ def inference(source_image,
 
     args.lr = 0.01
 
-    args.n_pix_step = n_pix_step
+    args.n_pix_step = n_pix_step # 每次向着target point移动一个pixel，一共移这么多次。
     print(args)
     full_h, full_w = source_image.shape[:2]
 

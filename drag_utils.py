@@ -76,7 +76,7 @@ def drag_diffusion_update(model, init_code, t, handle_points, target_points, mas
     with torch.no_grad():
         unet_output, F0 = model.forward_unet_features(init_code, t, encoder_hidden_states=text_emb,
             layer_idx=args.unet_feature_idx, interp_res=args.sup_res)
-        x_prev_0, _ = model.step(unet_output, t, init_code)
+        x_prev_0, _ = model.step(unet_output, t, init_code) # 返回 x_prev 和 pred_x0
 
     # prepare optimizable init_code and optimizer
     init_code.requires_grad_(True)

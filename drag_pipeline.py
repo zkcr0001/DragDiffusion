@@ -325,12 +325,29 @@ class DragPipeline(StableDiffusionPipeline):
             encoder_hidden_states=encoder_hidden_states,
             return_intermediates=True
             )
+        
+        '''
+        包含了最后convolution之前的所有upblock
+        length is 4
+        all_intermediate_features[0].shape
+        torch.Size([1, 1280, 16, 16])
+        all_intermediate_features[1].shape
+        torch.Size([1, 1280, 32, 32])
+        all_intermediate_features[2].shape
+        torch.Size([1, 640, 64, 64])
+        all_intermediate_features[3].shape
+        torch.Size([1, 320, 64, 64])
+        '''
 
         all_return_features = []
         for idx in layer_idx:
             feat = all_intermediate_features[idx]
+            print(feat.shape)
             feat = F.interpolate(feat, (interp_res, interp_res), mode='bilinear')
             all_return_features.append(feat)
+
+        # 将所有[1, 640, 64, 64]的feature resize成[1, 640, 256, 256]
+
         return_features = torch.cat(all_return_features, dim=1)
         return unet_output, return_features
 
