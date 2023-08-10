@@ -97,6 +97,15 @@ def inference(source_image,
               save_dir="./results"
     ):
 
+    print(points)
+    print(type(points))
+    print(mask)
+    print(mask.shape)
+    print(type(source_image))
+    print(source_image.shape)
+    print(type(image_with_clicks))
+    print(image_with_clicks.shape)
+
     # initialize model
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     scheduler = DDIMScheduler(beta_start=0.00085, beta_end=0.012,

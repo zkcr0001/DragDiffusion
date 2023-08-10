@@ -31,11 +31,15 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from diffusers import StableDiffusionPipeline
 
 from pytorch_lightning import seed_everything
+from accelerate.logging import get_logger
 
 
 # override unet forward
 # The only difference from diffusers:
 # return intermediate UNet features of all UpSample blocks
+
+logger = get_logger(__name__)
+
 def override_forward(self):
 
     def forward(
